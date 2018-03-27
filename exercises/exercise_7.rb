@@ -10,3 +10,54 @@ puts "Exercise 7"
 puts "----------"
 
 # Your code goes here ...
+
+
+class Employee < ActiveRecord::Base
+  validates  :first_name, presence: true
+  validates :last_name, presence: true
+  validates :hourly_rate, numericality: {
+    only_integer: true,
+    greater_than_or_equal_to: 40,
+    less_than_or_equal_to: 200
+  }
+  validates :store_id, presence: true
+end
+
+class Store < ActiveRecord::Base
+
+  validates :name, length: {minimum: 3}
+  validates :annual_revenue, numericality: {
+    only_integer: true,
+    greater_than_or_equal_to: 0
+  }
+  validate :women_or_mens_clothes
+
+
+  def women_or_mens_clothes
+    if (womens_apparel == nil) && (mens_apparel == nil)
+      errors.add(:no_clothes, "they don't sell any clothes")
+    end
+  end
+
+  puts "gimme a store name"
+  new_store = $stdin.gets.chomp
+  t = Store.new(name: new_store)
+  t.save
+  puts t.errors.messages
+
+  t.errors.messages.each do |newError|
+    puts newError
+  end
+end
+
+
+
+
+  # validate :expiration_date_cannot_be_in_the_past,
+  #   :discount_cannot_be_greater_than_total_value
+
+  # def expiration_date_cannot_be_in_the_past
+  #   if expiration_date.present? && expiration_date < Date.today
+  #     errors.add(:expiration_date, "can't be in the past")
+  #   end
+  # end

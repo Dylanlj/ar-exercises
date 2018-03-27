@@ -8,7 +8,7 @@ puts "----------"
 
 # Your code goes here ...
 
-class FetchMen < ActiveRecord::Base
+
 
   Store.create(name: "Surrey", annual_revenue: 224000, womens_apparel: true)
 
@@ -27,4 +27,3 @@ class FetchMen < ActiveRecord::Base
   @womens_stores.each do |store|
     puts "#{store.name} annual revenue: #{store.annual_revenue}"
   end
-end
