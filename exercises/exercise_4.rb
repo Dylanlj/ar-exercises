@@ -7,3 +7,24 @@ puts "Exercise 4"
 puts "----------"
 
 # Your code goes here ...
+
+class FetchMen < ActiveRecord::Base
+
+  Store.create(name: "Surrey", annual_revenue: 224000, womens_apparel: true)
+
+  Store.create(name: "Whistler", annual_revenue: 190000, mens_apparel: true)
+
+  Store.create(name: "Yaletown", annual_revenue: 430000, womens_apparel: true, mens_apparel: true)
+
+  @mens_stores = Store.where(mens_apparel: true)
+
+  @mens_stores.each do |store|
+    puts "#{store.name} annual revenue: #{store.annual_revenue}"
+  end
+
+  @womens_stores = Store.where("annual_revenue < 1000000").where(womens_apparel: true)
+
+  @womens_stores.each do |store|
+    puts "#{store.name} annual revenue: #{store.annual_revenue}"
+  end
+end
